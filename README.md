@@ -378,15 +378,14 @@ The shunt.sh script works by chaining a series of smaller scripts that accept in
 	| ./lookahead_2tokens.sh \
 	| ./fix_invoke.sh
 
-    line2char.sh: puts every character in the input on one line.
-    lookahead_char.sh: juxtaposes each character with the next character; it allows the next script to lookahead, when needed.
-    lex.sh: simplistic manual lexer; groups characters into operands; identifies functions and unary operators, and outputs qualified tokens.
-    lookahead_2tokens.sh: juxtaposes each token with the next two tokens; it allows the next script to lookahead two tokens, when needed.
-    fix_func0.sh: the rpn.sh script determines the number of arguments in a function call by counting the number of commas. Therefore, it cannot distinguish between zero (e.g. f()) and one argument (e.g. f(x)). Therefore, we must mark functions without arguments distinctively.
-    rpn.sh: the extended shunting yard algorithm.
-    fix_invoke.sh: adds the INVOKE instruction where appropriate, and creates the distinction between between DEREF and DEREFP.
-    fix_funcdef.sh: makes sure the function keyword is followed by an identifier.
-
+line2char.sh: puts every character in the input on one line.
+lookahead_char.sh: juxtaposes each character with the next character; it allows the next script to lookahead, when needed.
+lex.sh: simplistic manual lexer; groups characters into operands; identifies functions and unary operators, and outputs qualified tokens.
+lookahead_2tokens.sh: juxtaposes each token with the next two tokens; it allows the next script to lookahead two tokens, when needed.
+fix_func0.sh: the rpn.sh script determines the number of arguments in a function call by counting the number of commas. Therefore, it cannot distinguish between zero (e.g. f()) and one argument (e.g. f(x)). Therefore, we must mark functions without arguments distinctively.
+rpn.sh: the extended shunting yard algorithm.
+fix_invoke.sh: adds the INVOKE instruction where appropriate, and creates the distinction between between DEREF and DEREFP.
+fix_funcdef.sh: makes sure the function keyword is followed by an identifier.
  
 ## Conclusion
 
