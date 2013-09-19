@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#Written by erik@sankuru.biz
+#September 2010, Phnom Penh, Cambodia
+#Licensed under the GPL
+
+#------------------------
+#default escape sequences
+#------------------------
+ESC='\'
+SEQ_ESC='\'
+SEQ_NL='n'
+#------------------------
+IFS=""
+#------------------------
+#main logic
+#------------------------
+while read -r line ; do
+	line="$(echo ${line//"$ESC"/"$ESC$SEQ_ESC"})" #replace esc by seq-esc
+	echo -n "$line$ESC$SEQ_NL"
+done
+#------------------------
+

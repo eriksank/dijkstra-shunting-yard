@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#------------------------
+#default escape sequences
+#------------------------
+ESC='\'
+SEQ_ESC='\'
+SEQ_NL='n'
+#------------------------
+IFS=""
+#------------------------
+#main logic
+#------------------------
+while read -r -n 1 char ; do
+	case "$char" in
+		"$ESC") 
+			read -r -n 1 char_seq
+			case "${char_seq}" in
+				"$SEQ_ESC") echo -n "$ESC"
+				;;
+				"$SEQ_NL") echo "" #just output a newline
+				;;
+				"*") : #not allowed
+			esac		
+		;;
+		"") echo -n " " #strange; spaces are being collapsed
+		;;
+		*) echo -n "$char"
+		;;
+	esac
+done
+#------------------------
+
