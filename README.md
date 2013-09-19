@@ -1,6 +1,6 @@
 # Parsing object-oriented expressions with Dijkstra's shunting yard algorithm
 
-## Dijkstra's standard shunting yard algorithm
+## The standard shunting yard algorithm
 
 Dijkstra's standard shunting yard algorithm converts infix expressions to RPN (Reverse Polish Notation).
 
@@ -126,7 +126,8 @@ The stack-based instructions become:
 The essence of object-oriented expressions, is that the function to call must first be resolved from the variable being dereferenced. Next, the function found gets invoked with this variable and all other function arguments. It is a two-stage resolution process. You can chain and embed object-oriented expressions. For example:
 
 	$ echo 'r=a-≻f(x)-≻g(y)-≻h(x1-≻resolve(m),x2+3)' | ./shunt2.sh
-	r a x f OBJARG·1 DEREF INVOKE y g OBJARG·1 DEREF INVOKE x1 m resolve OBJARG·1 DEREF INVOKE x2 3 + h OBJARG·2 DEREF INVOKE =
+	r a x f OBJARG·1 DEREF INVOKE y g OBJARG·1 DEREF INVOKE 
+	x1 m resolve OBJARG·1 DEREF INVOKE x2 3 + h OBJARG·2 DEREF INVOKE =
 
 In principle -- unless its implementation still contains bugs -- the extended shunting yard parser should be able to parse object-oriented expressions of arbitrary complexity. The algorithm also distiguishes between method (=function) calls and object-property dereferencing. For example:
 
@@ -271,7 +272,10 @@ Adding support for traditional for(statement; statement; statement) instructions
 	SYS·RESET
 	BLKEND·}
  
-	$ echo 'foreach(item in items) { item-≻pick(); item-≻pack(); if(item-≻done) item-≻ship(); }' | ./shunt.sh
+	$ echo 'foreach(item in items) { \
+		item-≻pick(); item-≻pack(); \
+		if(item-≻done) item-≻ship(); }' | \
+		 ./shunt.sh
 	SYS·LOOPST
 	OPRND·item
 	OPRND·in
@@ -327,7 +331,9 @@ Support for function definitions can be added by applying special treatment to t
 
 For the parser, handling function definitions is relatively simple, but for the virtual machine less so. The virtual machine will need to create a function table to keep track of the function definitions. The parser does not need to be extended in order to support class definitions. It is again the virtual machine that would need to add specific support for them:
 
-	$ echo 'class whatever inherits anything { function f(x1,x2,x3) { return x1+x2+x3; } }' | ./shunt.sh
+	$ echo 'class whatever inherits anything { \
+		function f(x1,x2,x3) { 
+			return x1+x2+x3; } }' | ./shunt.sh
 	OPRND·class
 	OPRND·whatever
 	OPRND·inherits
